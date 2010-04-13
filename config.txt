@@ -1,0 +1,29 @@
+# stOrm configuration
+
+{
+# Jabber account where stOrm will login
+'CONNECT_SERVER': 'jsmart.web.id', #aka host. fe, xmpp.ya.ru and jid node@ya.ru
+'PORT': 5222,
+'JID': 'test@jsmart.web.id',
+'PASSWORD': 'secret',
+'RESOURCE': 'stOrm',
+
+# Chatroom nick
+'DEFAULT_NICK': 'stOrm',
+
+# Jabber accounts that will administrate Talisman
+'ADMINS': ['guy1@jsmart.web.id','guy2@jsmart.web.id'],
+'ADMIN_PASSWORD': 'supersecret',
+
+# Talisman will try to reconnect on disconnections
+'AUTO_RESTART': 1,
+
+# Where to store HTML files from chatrooms logs
+# To disable logging, set to empty string: '',
+'PUBLIC_LOG_DIR': '',
+
+# Where to store logs of private chats
+# To disable logging, set to empty string: '',
+'PRIVATE_LOG_DIR': '',
+
+}
