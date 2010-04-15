@@ -28,6 +28,169 @@ def popups_check(gch):
 		GCHCFGS[gch]['popups']=1
 		write_file(DBPATH,str(GCHCFGS[gch]))
 		return 1
+		
+def handler_remote(type, source, parameters):	
+	groupchat = source[1]
+	nick = source[2]
+	
+	groupchats = GROUPCHATS.keys()
+	groupchats.sort()
+
+	if parameters:
+		spltdp = parameters.split(' ', 2)
+		dest_gch = spltdp[0]
+		
+		if len(spltdp) >= 2:
+			dest_comm = spltdp[1]
+		else:
+			reply(type, source, u'Invalid syntax!')
+			return
+		
+		dest_params = ''
+		
+		if dest_gch.isdigit():
+			if int(dest_gch) <= len(groupchats) and int(dest_gch) != 0:
+				dest_gch = groupchats[int(dest_gch)-1]
+			else:
+				reply(type, source, u'The Conference does not exist!')
+				return
+		else:
+			if not dest_gch in groupchats:
+				reply(type, source, u'The Conference does not exist!')
+				return
+				
+		if len(spltdp) >= 3:
+			dest_params = spltdp[2]
+		
+		bot_nick = get_bot_nick(dest_gch)
+		
+		dest_source = [groupchat+'/'+nick,dest_gch,bot_nick]
+		
+		if COMMAND_HANDLERS.has_key(dest_comm.lower()):
+			comm_hnd = COMMAND_HANDLERS[dest_comm.lower()]
+		elif MACROS.macrolist[dest_gch].has_key(dest_comm.lower()):
+			exp_alias = MACROS.expand(dest_comm.lower(), dest_source)
+			
+			spl_comm_par = exp_alias.split(' ',1)
+			dest_comm = spl_comm_par[0]
+			
+			if len(spl_comm_par) >= 2:
+				alias_par = spl_comm_par[1]
+				dest_params = alias_par+' '+dest_params
+				dest_params = dest_params.strip()
+			
+			if COMMAND_HANDLERS.has_key(dest_comm.lower()):
+				comm_hnd = COMMAND_HANDLERS[dest_comm.lower()]
+			else:
+				reply(type, source, u'Unknown command!')
+				return
+		elif MACROS.gmacrolist.has_key(dest_comm.lower()):
+			exp_alias = MACROS.expand(dest_comm.lower(), dest_source)
+			
+			spl_comm_par = exp_alias.split(' ',1)
+			dest_comm = spl_comm_par[0]
+			
+			if len(spl_comm_par) >= 2:
+				alias_par = spl_comm_par[1]
+				dest_params = alias_par+' '+dest_params
+				dest_params = dest_params.strip()
+			
+			if COMMAND_HANDLERS.has_key(dest_comm.lower()):
+				comm_hnd = COMMAND_HANDLERS[dest_comm.lower()]
+			else:
+				reply(type, source, u'Unknown command!')
+				return
+		else:
+			reply(type, source, u'Unknown command!')
+			return
+		
+		if type == 'public':
+			reply(type, source, u'Look in private!')
+			
+		comm_hnd('private',dest_source,dest_params)
+	else:
+		gchli = [u'%s) %s' % (groupchats.index(li)+1,li) for li in groupchats]
+		
+		if gchli:
+			rep = u'Available Conferences:\n%s' % ('\n'.join(gchli))
+		else:
+			rep = u'No available conferences!'
+			
+		reply(type, source, rep)
+
+def handler_redirect(type, source, parameters):	
+	groupchat = source[1]
+	nick = source[2]
+	
+	if parameters:
+		if ':' in parameters:
+			spltdp = parameters.split(':', 1)
+			dest_nick = spltdp[0]
+			
+			if len(spltdp) >= 2:
+				mess = spltdp[1]
+				comm_par = spltdp[1].strip()
+				comm_par = comm_par.split(' ',1)
+				comm = comm_par[0].strip()
+				params = ''
+				
+				if len(comm_par) >= 2:
+					params = comm_par[1].strip()
+			else:
+				reply(type, source, u'Invalid syntax!')
+				return
+			
+			bot_nick = get_bot_nick(groupchat)
+			
+			dest_source = [groupchat+'/'+dest_nick,groupchat,bot_nick]
+			
+			if COMMAND_HANDLERS.has_key(comm.lower()):
+				comm_hnd = COMMAND_HANDLERS[comm.lower()]
+			elif MACROS.macrolist[groupchat].has_key(comm.lower()):
+				exp_alias = MACROS.expand(comm.lower(), dest_source)
+				
+				spl_comm_par = exp_alias.split(' ',1)
+				comm = spl_comm_par[0]
+				
+				if len(spl_comm_par) >= 2:
+					alias_par = spl_comm_par[1]
+					params = alias_par+' '+params
+					params = params.strip()
+				
+				if COMMAND_HANDLERS.has_key(comm.lower()):
+					comm_hnd = COMMAND_HANDLERS[comm.lower()]
+				else:
+					reply(type, source, u'Sent!')
+					reply('private', [groupchat+'/'+dest_nick,groupchat,dest_nick], mess)
+					return
+			elif MACROS.gmacrolist.has_key(comm.lower()):
+				exp_alias = MACROS.expand(comm.lower(), dest_source)
+				
+				spl_comm_par = exp_alias.split(' ',1)
+				comm = spl_comm_par[0]
+				
+				if len(spl_comm_par) >= 2:
+					alias_par = spl_comm_par[1]
+					params = alias_par+' '+params
+					params = params.strip()
+				
+				if COMMAND_HANDLERS.has_key(comm.lower()):
+					comm_hnd = COMMAND_HANDLERS[comm.lower()]
+				else:
+					reply('private', [groupchat+'/'+dest_nick,groupchat,dest_nick], mess)
+					reply(type, source, u'Sent!')
+					return
+			else:
+				reply('private', [groupchat+'/'+dest_nick,groupchat,dest_nick], mess)
+				reply(type, source, u'Sent!')
+				return
+			
+			comm_hnd('private',dest_source,params)
+			reply(type, source, u'Sent!')
+		else:
+			reply(type, source, u'Invalid syntax!')
+	else:
+		reply(type, source, u'Invalid syntax!')
 				
 def handler_admin_join(type, source, parameters):
 	if not source[1] in GROUPCHATS:
@@ -105,9 +268,9 @@ def handler_admin_leave(type, source, parameters):
 #		else:
 #			msg(groupchat, u'leaved by'+source[2])
 	if reason:
-		leave_groupchat(groupchat, u'leaved me by '+source[2]+u' reason:\n'+reason)
+		leave_groupchat(groupchat,)#u'leaved me by '+source[2]+u' reason:\n'+reason)
 	else:
-		leave_groupchat(groupchat,u'leaved me by '+source[2])
+		leave_groupchat(groupchat,)#u'leaved me by '+source[2])
 	reply(type, source, u'leaved ' + groupchat)
 
 
@@ -246,10 +409,10 @@ def handler_botautoaway_onoff(type, source, parameters):
 			return		
 		DBPATH='dynamic/'+source[1]+'/config.cfg'
 		if parameters==1:
-			GCHCFGS[source[1]]['autoaway']=1
+			GCHCFGS[source[1]]['autoaway']=0
 			reply(type,source,u'auto-status enabled')
 		else:
-			GCHCFGS[source[1]]['autoaway']=0
+			GCHCFGS[source[1]]['autoaway']=1
 			reply(type,source,u'auto-status disabled')
 		get_autoaway_state(source[1])
 		write_file(DBPATH,str(GCHCFGS[source[1]]))
@@ -274,7 +437,7 @@ def handler_botautoaway_onoff(type, source, parameters):
 			except:
 				status=None
 		change_bot_status(source[1],status,show,0)
-		GCHCFGS[gch]['status']={'status': status, 'show': show}
+		GCHCFGS[gch]['status']={'status': status, 'dnd': show}
 	else:
 		stmsg=GROUPCHATS[source[1]][get_bot_nick(source[1])]['stmsg']
 		status=GROUPCHATS[source[1]][get_bot_nick(source[1])]['status']
@@ -285,9 +448,9 @@ def handler_botautoaway_onoff(type, source, parameters):
 			
 def get_autoaway_state(gch):
 	if not 'autoaway' in GCHCFGS[gch]:
-		GCHCFGS[gch]['autoaway']=1
+		GCHCFGS[gch]['autoaway']=0
 	if GCHCFGS[gch]['autoaway']:
-		LAST['gch'][gch]['autoaway']=0
+		LAST['gch'][gch]['autoaway']=1
 		LAST['gch'][gch]['thr']=None
 		
 """def set_default_gch_status(gch):
@@ -296,6 +459,52 @@ def get_autoaway_state(gch):
 	elif not isinstance(GCHCFGS[gch].get('status'), dict):
 		GCHCFGS[gch]['status']={'status': u'write "help" and follow the instructions to understand how to work with me', 'show': u''}"""
 
+def handler_delivery(type,source,body):
+	sender_jid = source[1]
+	
+	if GROUPCHATS.has_key(sender_jid):
+		return
+		
+	if ADMINS_DELIVERY:
+		if not sender_jid in ADMINS:
+			prob_comm = body.split()[0].lower()
+			cname = ''
+			
+			if sender_jid in ROSTER.getItems():
+				subs = ROSTER.getSubscription(sender_jid)
+				cname = ROSTER.getName(sender_jid)
+				
+				#if subs != 'both':
+				#	return
+			#else:
+			#	return
+			
+			if not cname:
+				cname = sender_jid
+			
+			if not prob_comm in COMMANDS and not prob_comm in MACROS.gmacrolist:
+				if cname != sender_jid:
+					rep = u'Note from %s (%s):\n\n%s' % (cname, sender_jid, body)
+				else:
+					rep = u'Note from %s:\n\n%s' % (cname, body)
+				
+				for adli in ADMINS:
+					msg(adli,rep)
+				
+def handler_admin_subscription():
+	for adli in ADMINS:
+		gsubs = ''
+		
+		if adli in ROSTER.getItems():
+			gsubs = ROSTER.getSubscription(adli)
+		
+		admin_id = adli.split('@')[0]
+		
+		if not gsubs:
+			ROSTER.setItem(adli,admin_id,['bot-admins'])
+			
+		if gsubs != 'both':
+			ROSTER.Subscribe(adli)
 
 register_command_handler(handler_admin_join, 'join', ['superadmin','muc','all'], 100, 'Join conference, if there is a password write that password right after the name of conference.', 'join <conference> [pass=12345] [reason]', ['join tangerang@conference.jabberid.org', 'join tangerang@conference.jabberid.org *VICTORY*', 'join tangerang@conference.jabberid.org pass=12345 *VICTORY*'])
 register_command_handler(handler_admin_leave, 'leave', ['admin','muc','all'], 30, 'Leave conference.', 'leave <conference> [reason]', ['leave tangerang@conference.jabberid.org sleep', 'leave sleep','leave'])
@@ -308,6 +517,10 @@ register_command_handler(handler_glob_msg_help, 'hglobmsg', ['superadmin','muc',
 register_command_handler(handler_popups_onoff, 'popups', ['admin','muc','all'], 30, 'Off (0) On (1) message about join/leaves, restarts/off, and also global news for certain conf. Without a parameter the bot will based on current status.', 'popups [conf] [1|0]', ['popups tangerang@conference.jabberid.org 1','popups tangerang@conference.jabberid.org 0','popups'])
 #register_command_handler(handler_botautoaway_onoff, 'autoaway', ['admin','muc','all'], 30, 'Off (0) on (1) auto-status away due to abscence of commands within 10 minutes, without an option it will show current status.', 'autoaway [1|0]', ['autoaway 1','autoaway'])
 #register_command_handler(handler_changebotstatus, 'stch', ['admin','muc','all'], 20, 'Change bot status according to the list:\naway - absent,\nxa - extended away,\ndnd - dont disturb,\nchat - free for chat,\nand also status message (if it given).', 'stch [status] [message]', ['stch away','stch away go to work'])
+register_command_handler(handler_remote, 'remote', ['superadmin','muc','all','*'], 40, 'Allows you to remotely execute commands and aliases in other conferences on behalf of the bot and get the result. Without parameters displays a list of conferences with the numbers, instead of the full name of the conference can use a number from the list.', 'remote <groupchat|number from the list> <comm> <parameters>', ['remote botzone@conference.jsmart.web.id ping guy','remote 2 time guy','remote'])
+register_command_handler(handler_redirect, 'redirect', ['admin','muc','all','*'], 20, 'Redirects the result of a command or an alias to the specified user in private. If the alias or command is not specified and instead the text, or any false, then sends the user a message.', 'redirect <nick>:<command>[<params>]|<mess>', ['redirect guy: ping lady'])
 
 register_stage1_init(get_autoaway_state)
 #register_stage1_init(set_default_gch_status)
+#register_message_handler(handler_delivery)
+#register_stage2_init(handler_admin_subscription)
