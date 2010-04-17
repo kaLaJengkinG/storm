@@ -23,10 +23,10 @@ from __future__ import with_statement
 import sys
 import os
 
-#f=open("/home/toofan/storm/storm.pid","wb")
+#f=open("/opt/storm/storm.pid","wb")
 #f.write(str(os.getpid()))
 #f.close()
-#os.chmod("/home/toofan/storm/storm.pid",0777)
+#os.chmod("/opt/storm/storm.pid",0777)
 
 os.chdir(os.path.dirname(sys.argv[0]))
 
@@ -76,7 +76,7 @@ AFFILIATIONS={'none':0, 'member':1, 'admin':5, 'owner':15}
 
 LAST = {'c':'', 't':0, 'gch':{}}
 INFO = {'start': 0, 'msg': 0, 'prs':0, 'iq':0, 'cmd':0, 'thr':0}
-BOT_VER = {'rev': 86, 'botver': {'name': 'stOrm', 'ver': 'ver. 1.02 (core mod rev %s) [antiflood]', 'os': ''}}
+BOT_VER = {'rev': 4, 'botver': {'name': 'stOrm', 'ver': 'ver. 1.02 (mod rev %s) [antiflood]', 'os': ''}}
 ################################################################################
 
 COMMANDS = {}

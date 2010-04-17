@@ -25,11 +25,11 @@ strip_tags = re_compile(r'<[^<>]+>')
 
 def update_lastrev():
 	try:
-		req = urllib2.Request('http://svn.xmpp.ru/repos/talisman/trunk/')
+		req = urllib2.Request('http://googlecode')
 		req.add_header = ('User-agent', 'Mozilla/5.0')
 		r = urllib2.urlopen(req)
 		target = r.read()
-		od = re.search('<h2>talisman - Revision ',target)
+		od = re.search('<h2>storm-bot - Revision ',target)
 		rev = target[od.end():]
 		rev = rev[:re.search(': /trunk</h2>',rev).start()]
 		return unicode(decode(rev),'windows-1251').strip()
@@ -38,7 +38,7 @@ def update_lastrev():
 	
 def update_lastrev_comment():
 	try:
-		req = urllib2.Request('http://svn.xmpp.ru/repos/talisman/trunk/LAST')
+		req = urllib2.Request('http://storm-bot.googlecode.com/svn/trunk/LAST')
 		req.add_header = ('User-agent', 'Mozilla/5.0')
 		r = urllib2.urlopen(req)
 		target = r.read()
