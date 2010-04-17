@@ -1,1 +1,5 @@
-fix update info
+tags: fix update info get info, fix join from roster
+
+1) update_plugin.py - rewrite svn link
+2) storm.py - modify and disable some useful codes
+3) antivipe_plugin.py - disable the command for suspend

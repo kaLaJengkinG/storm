@@ -25,7 +25,7 @@ strip_tags = re_compile(r'<[^<>]+>')
 
 def update_lastrev():
 	try:
-		req = urllib2.Request('http://googlecode')
+		req = urllib2.Request('http://storm-bot.googlecode.com/svn/trunk')#('http://googlecode')
 		req.add_header = ('User-agent', 'Mozilla/5.0')
 		r = urllib2.urlopen(req)
 		target = r.read()

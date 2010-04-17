@@ -76,7 +76,7 @@ AFFILIATIONS={'none':0, 'member':1, 'admin':5, 'owner':15}
 
 LAST = {'c':'', 't':0, 'gch':{}}
 INFO = {'start': 0, 'msg': 0, 'prs':0, 'iq':0, 'cmd':0, 'thr':0}
-BOT_VER = {'rev': 4, 'botver': {'name': 'stOrm', 'ver': 'ver. 1.02 (mod rev %s) [antiflood]', 'os': ''}}
+BOT_VER = {'rev': 5, 'botver': {'name': 'stOrm', 'ver': 'ver. 1.02 (mod rev %s) [antiflood]', 'os': ''}}
 ################################################################################
 
 COMMANDS = {}
@@ -594,8 +594,8 @@ def messageHnd(con, msg):
 	msgtype = msg.getType()
 	fromjid = msg.getFrom()
 	INFO['msg'] += 1
-	if fromjid.getStripped() not in GROUPCHATS and fromjid.getStripped() not in ADMINS:
-		return
+#	if fromjid.getStripped() not in GROUPCHATS and fromjid.getStripped() not in ADMINS:
+#		return
 	if user_level(fromjid,fromjid.getStripped())==-100:
 		return
 	if msg.timestamp:
