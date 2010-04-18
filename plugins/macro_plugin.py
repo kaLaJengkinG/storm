@@ -124,7 +124,7 @@ def macrolist_handler(type, source, parameters):
 		if dsbll:
 			rep+=u'\n\nThe followings local macros are power-offs in this conference:\n'+', '.join(dsbll)
 	else:
-		rep+=u'\n\nLOCAL\nempty\n'
+		rep+=u'\nLOCAL\nempty\n'
 	for macro in MACROS.gmacrolist.keys():
 		if macro in COMMOFF[source[1]]:
 			dsblg.append(macro)

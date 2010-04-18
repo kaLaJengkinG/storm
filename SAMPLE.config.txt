@@ -4,16 +4,16 @@
 # Jabber account where stOrm will login
 'CONNECT_SERVER': 'jsmart.web.id', #aka host. fe, xmpp.ya.ru and jid node@ya.ru
 'PORT': 5222,
-'JID': 'test@jsmart.web.id',
-'PASSWORD': 'secret',
-'RESOURCE': 'stOrm',
+'JID': 'test_bot@jsmart.web.id',
+'PASSWORD': 'orangpintar',
+'RESOURCE': 'bot++',
 
 # Chatroom nick
-'DEFAULT_NICK': 'stOrm',
+'DEFAULT_NICK': 'stOrm-testing',
 
 # Jabber accounts that will administrate Talisman
-'ADMINS': ['guy1@jsmart.web.id','guy2@jsmart.web.id'],
-'ADMIN_PASSWORD': 'supersecret',
+'ADMINS': ['razor_blade@jsmart.web.id'],
+'ADMIN_PASSWORD': 'adaadaaja',
 
 # Talisman will try to reconnect on disconnections
 'AUTO_RESTART': 1,

@@ -22,12 +22,6 @@
 from __future__ import with_statement
 import sys
 import os
-
-#f=open("/opt/storm/storm.pid","wb")
-#f.write(str(os.getpid()))
-#f.close()
-#os.chmod("/opt/storm/storm.pid",0777)
-
 os.chdir(os.path.dirname(sys.argv[0]))
 
 sys.path.insert(1, 'modules')
@@ -76,7 +70,10 @@ AFFILIATIONS={'none':0, 'member':1, 'admin':5, 'owner':15}
 
 LAST = {'c':'', 't':0, 'gch':{}}
 INFO = {'start': 0, 'msg': 0, 'prs':0, 'iq':0, 'cmd':0, 'thr':0}
-BOT_VER = {'rev': 5, 'botver': {'name': 'stOrm', 'ver': 'ver. 1.02 (mod rev %s) [antiflood]', 'os': ''}}
+
+SVN_REPOS = 'http://storm-bot.googlecode.com/svn/trunk'
+
+BOT_VER = {'rev': 6, 'botver': {'name': 'stOrm', 'ver': 'ver. 1.02 (mod rev %s) [antiflood]', 'os': ''}}
 ################################################################################
 
 COMMANDS = {}
@@ -382,6 +379,7 @@ def change_bot_status(gch,status,show,auto=0):
 		prs.setStatus(status)
 	if show:
 		prs.setShow(show)
+	prs.setTag('c', namespace=xmpp.NS_CAPS, attrs={'node':SVN_REPOS,'ver':BOT_VER['botver']['ver'] %(BOT_VER['rev'])})
 	JCON.send(prs)
 	if auto:
 		LAST['gch'][gch]['autoaway']=0
@@ -514,6 +512,7 @@ def join_groupchat(groupchat=None, nick=DEFAULT_NICK, passw=None):
         prs.setShow(confstatus[0])
         prs.setStatus(confstatus[1])
         pres=prs.setTag('x',namespace=xmpp.NS_MUC)
+        prs.setTag('c', namespace=xmpp.NS_CAPS, attrs={'node':SVN_REPOS,'ver':BOT_VER['botver']['ver'] %(BOT_VER['rev'])})
         pres.addChild('history',{'maxchars':'0','maxstanzas':'0'})
         if passw:
                 pres.setTagData('password', passw)

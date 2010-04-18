@@ -1,5 +1,3 @@
-tags: fix update info get info, fix join from roster
+tags: modify storm core
 
-1) update_plugin.py - rewrite svn link
-2) storm.py - modify and disable some useful codes
-3) antivipe_plugin.py - disable the command for suspend
+1) storm.py - put information on http://jabber.org/protocol/caps#node

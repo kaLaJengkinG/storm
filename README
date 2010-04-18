@@ -1,0 +1,17 @@
+stOrm is base on Talisman ver.1 preXP1 revision 86 source code with some modifications
+It's response to reply was translated into English
+
+*****		REQUIREMENTS		*****
+python-2.6 or the latest  --> http://www.python.org/download/
+TortoiseSVN-1.6.7 or the lates --> http://www.open.collab.net/downloads/subversion/
+
+*****		INSTALLATION		*****
+Download the source code of stOrm by svnsubversion from official repository:
+svn co http://storm-bot.googlecode.com/svn/trunk storm-bot
+
+*****		RUNNING		*****
+1)	rename the file SAMPLE.config.txt to config.txt and then edit it!
+2)	run start.py on *NIX environment or storm.py on WINDOWS environment!
+3)	just report your bugs on tangerang@conference.jsmart.web.id
+
+	blaDe - barking dogs seldom bite
