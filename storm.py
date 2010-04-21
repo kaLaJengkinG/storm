@@ -73,7 +73,7 @@ INFO = {'start': 0, 'msg': 0, 'prs':0, 'iq':0, 'cmd':0, 'thr':0}
 
 SVN_REPOS = 'http://storm-bot.googlecode.com/svn/trunk'
 
-BOT_VER = {'rev': 6, 'botver': {'name': 'stOrm', 'ver': 'ver. 1.02 (mod rev %s) [antiflood]', 'os': ''}}
+BOT_VER = {'rev': 8, 'botver': {'name': 'stOrm', 'ver': 'ver. 1.02 (mod rev %s) [antiflood]', 'os': ''}}
 ################################################################################
 
 COMMANDS = {}
