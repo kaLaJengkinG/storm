@@ -306,7 +306,7 @@ def handler_order_filt(type, source, parameters):
 	if parameters:
 		parameters=parameters.split()
 		if len(parameters)<2:
-			reply(type,source,u'syntax disabled')
+			reply(type,source,u'invalid syntax')
 			return
 		if GCHCFGS[source[1]].has_key('filt'):
 			if parameters[0]=='time':
@@ -317,7 +317,7 @@ def handler_order_filt(type, source, parameters):
 					reply(type,source,u'filt time has been enabled')
 					GCHCFGS[source[1]]['filt']['time']=1
 				else:
-					reply(type,source,u'syntax disabled')
+					reply(type,source,u'invalid syntax')
 			elif parameters[0]=='presence':
 				if parameters[1]=='0':
 					reply(type,source,u'filt presence has been disabled')
@@ -326,7 +326,7 @@ def handler_order_filt(type, source, parameters):
 					reply(type,source,u'filt presence has been enabled')
 					GCHCFGS[source[1]]['filt']['presence']=1
 				else:
-					reply(type,source,u'syntax disabled')
+					reply(type,source,u'invalid syntax')
 			elif parameters[0]=='len':
 				if parameters[1]=='0':
 					reply(type,source,u'filt len has been disabled')
@@ -335,7 +335,7 @@ def handler_order_filt(type, source, parameters):
 					reply(type,source,u'filt len has been enabled')
 					GCHCFGS[source[1]]['filt']['len']=1
 				else:
-					reply(type,source,u'syntax disabled')
+					reply(type,source,u'invalid syntax')
 			elif parameters[0]=='like':
 				if parameters[1]=='0':
 					reply(type,source,u'filt like has been disabled')
@@ -344,7 +344,7 @@ def handler_order_filt(type, source, parameters):
 					reply(type,source,u'filt like has been enabled')
 					GCHCFGS[source[1]]['filt']['like']=1
 				else:
-					reply(type,source,u'syntax disabled')
+					reply(type,source,u'invalid syntax')
 			elif parameters[0]=='caps':
 				if parameters[1]=='0':
 					reply(type,source,u'filt caps has been disabled')
@@ -353,7 +353,7 @@ def handler_order_filt(type, source, parameters):
 					reply(type,source,u'filt caps has been enabled')
 					GCHCFGS[source[1]]['filt']['caps']=1
 				else:
-					reply(type,source,u'syntax disabled')	
+					reply(type,source,u'invalid syntax')	
 			elif parameters[0]=='prsstlen':
 				if parameters[1]=='0':
 					reply(type,source,u'filt prsstlen has been disabled')
@@ -362,7 +362,7 @@ def handler_order_filt(type, source, parameters):
 					reply(type,source,u'filt prsstlen has been enabled')
 					GCHCFGS[source[1]]['filt']['prsstlen']=1
 				else:
-					reply(type,source,u'syntax disabled')
+					reply(type,source,u'invalid syntax')
 			elif parameters[0]=='obscene':
 				if parameters[1]=='0':
 					reply(type,source,u'filt obscene has been disabled')
@@ -371,13 +371,13 @@ def handler_order_filt(type, source, parameters):
 					reply(type,source,u'filt obscene has been enabled')
 					GCHCFGS[source[1]]['filt']['obscene']=1
 				else:
-					reply(type,source,u'syntax disabled')
+					reply(type,source,u'invalid syntax')
 			elif parameters[0]=='fly':
 				if parameters[1]=='cnt':
 					try:
 						int(parameters[2])
 					except:
-						reply(type,source,u'syntax disabled')
+						reply(type,source,u'invalid syntax')
 					if int(parameters[2]) in xrange(0,121):
 						reply(type,source,u'filt fly for '+parameters[2]+u' seconds')
 						GCHCFGS[source[1]]['filt']['fly']['time']=int(parameters[2])	
@@ -392,7 +392,7 @@ def handler_order_filt(type, source, parameters):
 							reply(type,source,u'flying will be kicked')
 							GCHCFGS[source[1]]['filt']['fly']['mode']='kick'	
 					else:
-						reply(type,source,u'syntax disabled')		
+						reply(type,source,u'invalid syntax')		
 				elif parameters[1]=='0':
 					reply(type,source,u'filt fly has been disabled')
 					GCHCFGS[source[1]]['filt']['fly']['cond']=0
@@ -400,13 +400,13 @@ def handler_order_filt(type, source, parameters):
 					reply(type,source,u'filt fly has been enabled')
 					GCHCFGS[source[1]]['filt']['fly']['cond']=1
 				else:
-					reply(type,source,u'syntax disabled')
+					reply(type,source,u'invalid syntax')
 			elif parameters[0]=='kicks':
 				if parameters[1]=='cnt':
 					try:
 						int(parameters[2])
 					except:
-						reply(type,source,u'syntax disabled')
+						reply(type,source,u'invalid syntax')
 					if int(parameters[2]) in xrange(2,10):
 						reply(type,source,u'autoban after '+parameters[2]+u' kicks')
 						GCHCFGS[source[1]]['filt']['kicks']['cnt']=int(parameters[2])	
@@ -419,13 +419,13 @@ def handler_order_filt(type, source, parameters):
 					reply(type,source,u'filt kicks has been enabled')
 					GCHCFGS[source[1]]['filt']['kicks']['cond']=1
 				else:
-					reply(type,source,u'syntax disabled')
+					reply(type,source,u'invalid syntax')
 			elif parameters[0]=='idle':
 				if parameters[1]=='time':
 					try:
 						int(parameters[2])
 					except:
-						reply(type,source,u'syntax disabled')			
+						reply(type,source,u'invalid syntax')			
 					reply(type,source,u'autokick idle for '+parameters[2]+u' seconds ('+timeElapsed(int(parameters[2]))+u')')
 					GCHCFGS[source[1]]['filt']['idle']['time']=int(parameters[2])
 				elif parameters[1]=='0':
@@ -435,7 +435,7 @@ def handler_order_filt(type, source, parameters):
 					reply(type,source,u'filt idle has been enabled')
 					GCHCFGS[source[1]]['filt']['idle']['cond']=1
 			else:
-				reply(type,source,u'syntax disabled')
+				reply(type,source,u'invalid syntax')
 				return					
 			DBPATH='dynamic/'+source[1]+'/config.cfg'
 			write_file(DBPATH, str(GCHCFGS[source[1]]))
