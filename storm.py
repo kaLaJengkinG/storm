@@ -73,7 +73,7 @@ INFO = {'start': 0, 'msg': 0, 'prs':0, 'iq':0, 'cmd':0, 'thr':0}
 
 SVN_REPOS = 'http://storm-bot.googlecode.com/svn/trunk'
 
-BOT_VER = {'rev': 10, 'botver': {'name': 'stOrm', 'ver': 'ver. 1.02 (rev %s) [antiflood]', 'os': ''}}
+BOT_VER = {'rev': 11, 'botver': {'name': 'stOrm', 'ver': 'ver. 1.02 (rev %s) [antiflood]', 'os': ''}}
 ################################################################################
 
 COMMANDS = {}
@@ -826,6 +826,27 @@ def start():
 		print 'Wrong, wrong JID %s' % JID
 		os.abort()
 	print '\n...---===STARTING BOT===---...\n'
+	
+	pid = str(os.getpid())
+	
+	try:
+		fp = file('storm.pid', 'r')
+		p = fp.read()
+		fp.close()
+		if p <> pid:
+			os.kill(int(p), 3)
+			time.sleep(1)
+			try:
+				os.kill(int(p), 9)
+			except:
+				pass
+			sys.stdout.write('pid %s killed.. ' % (p, ))
+	except: pass
+
+	fp = file('storm.pid', 'w')
+	fp.write(pid)
+	fp.close()
+	
 	global JCON
 	JCON = xmpp.Client(server=SERVER, port=PORT, debug=[])
 	
