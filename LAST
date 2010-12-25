@@ -1,3 +1,2 @@
-tags: modify core storm.py
-
-1) core.py - modified, create self PID
+1). core modify - storm.py
+2). plugin modify - admin.py

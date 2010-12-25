@@ -55,7 +55,7 @@ def handler_access_view_access(type, source, parameters):
 				levdesc=''
 			reply(type, source, level+' '+levdesc)
 		else:
-			reply(type, source, u'dia ada di sini? :-O')
+			reply(type, source, u'where is the guy? :-O')
 
 def handler_access_set_access(type, source, parameters):
 	if not source[1] in GROUPCHATS:
@@ -66,14 +66,14 @@ def handler_access_set_access(type, source, parameters):
 		try:
 			int(splitdata[1].strip())
 		except:
-			reply(type, source, u'perintah salah, baca "help set_access"')
+			reply(type, source, u'wrong command, read "help set_access"')
 			return				
 		if int(splitdata[1].strip())>100 or int(splitdata[1].strip())<-100:
-			reply(type, source, u'perintah salah, read help on using the command')
+			reply(type, source, u'wrong command, read "help set_access"')
 			return		
 	nicks=GROUPCHATS[source[1]]
 	if not splitdata[0].strip() in nicks and GROUPCHATS[source[1]][splitdata[0].strip()]['ishere']==0:
-		reply(type, source, u'dia ada di sini? :-O')
+		reply(type, source, u'where is the guy? :-O')
 		return
 	tjidto=get_true_jid(source[1]+'/'+splitdata[0].strip())
 	tjidsource=get_true_jid(source)
@@ -87,13 +87,13 @@ def handler_access_set_access(type, source, parameters):
 		else:
 			if tjidto==tjidsource:
 				if int(splitdata[1]) > int(jidacc):
-					reply(type, source, u'*FIGA*')
+					reply(type, source, u':-P')
 					return
 			elif int(toacc) > int(jidacc):
-				reply(type, source, u'*FIGA*')
+				reply(type, source, u':-P')
 				return		
 			elif int(splitdata[1]) >= int(jidacc):
-				reply(type, source, u'*FIGA*')
+				reply(type, source, u':-P')
 				return	
 	else:
 		if tjidsource in ADMINS:
@@ -102,21 +102,21 @@ def handler_access_set_access(type, source, parameters):
 			if tjidto==tjidsource:
 				pass
 			elif int(toacc) > int(jidacc):
-				reply(type, source, u'*FIGA*')
+				reply(type, source, u':-P')
 				return
 
 	if len(splitdata) == 1:		
 		change_access_perm(source[1], tjidto)
 		if splitdata[0].strip()==source[2]:
-			reply(type, source, u'akses dicabut, anda perlu rejoin room')
+			reply(type, source, u'local access withdrawn, need to rejoin room')
 		else:
-			reply(type, source, u'akses dicabut, %s, perlu rejoin room' % splitdata[0].strip())
+			reply(type, source, u'local access withdrawn, %s, need to rejoin room' % splitdata[0].strip())
 	elif len(splitdata) == 2:
 		change_access_temp(source[1], tjidto, splitdata[1].strip())
-		reply(type, source, u'diberikan akses sementara')
+		reply(type, source, u'local temporary access granted')
 	elif len(splitdata) == 3:
 		change_access_perm(source[1], tjidto, splitdata[1].strip())
-		reply(type, source, u'diberikan akses permanen')		
+		reply(type, source, u'local permanent access granted')		
 		
 def handler_access_set_access_glob(type, source, parameters):
 	if not source[1] in GROUPCHATS:
@@ -129,15 +129,15 @@ def handler_access_set_access_glob(type, source, parameters):
 			return
 		nicks=GROUPCHATS[source[1]].keys()
 		if not splitdata[0].strip() in nicks and GROUPCHATS[source[1]][splitdata[0].strip()]['ishere']==0:
-			reply(type, source, u'dia ada di sini? :-O')
+			reply(type, source, u'where is the guy? :-O')
 			return
 		tjidto=get_true_jid(source[1]+'/'+splitdata[0])
 		if len(splitdata)==2:
 			change_access_perm_glob(tjidto, int(splitdata[1]))
-			reply(type, source, u'diberikan')
+			reply(type, source, u'global access granted')
 		else:
 			change_access_perm_glob(tjidto)
-			reply(type, source, u'dihapus')
+			reply(type, source, u'global access withdrawn')
 			
 def get_access_levels():
 	global GLOBACCESS
@@ -148,10 +148,10 @@ def get_access_levels():
 		write_file(GLOBACCESS_FILE, str(GLOBACCESS))
 	ACCBYCONFFILE = eval(read_file(ACCBYCONF_FILE))
 
-register_command_handler(handler_access_login, 'login', ['access','admin','all'], 0, 'Login sebagai admin-bot, perintah harus diketik secara private!', 'login <sandi>', ['login rahasia'])
-register_command_handler(handler_access_login, 'logout', ['access','admin','all'], 0, 'Logout sebagai bot admin.', 'logout', ['logout'])
-register_command_handler(handler_access_view_access, 'access', ['access','admin','all'], 0, 'Menunjukkan tingkat akses user.\n-100 - diabaikan, seluruh pesan oleh pengguna dengan akses ini akan diabaikan pada tingkat kernel\n-1 - ditiadakan\n0 - perintah dan macro sangat dibatasi, otomatis dikenal sebagai visitor\n10 - parintah dan macro standar, otomatis dikenal sebagai participan\n11 - perintah dan macro diperluas (akses juga ;-) !!!), otomatis dikenal sebagai member\n15 (16) - perintah dan macro moderator, otomatis dikenal sebagai moderator\n20 - perintah dan macro admin, otomatis dikenal sebagai admin\n30 - perintah dan macro owner, otomatis dikenal sebagai owner\n40 - tidak semua perintah diiplementasikan, dapat menggunakan perintah leave dan join bot\n100 - admin-bot, patuh semua perintah', 'access [nick]', ['access', 'access guy'])
-register_command_handler(handler_access_set_access, 'set_access', ['access','admin','all'], 15, 'Menetapkan atau menghapus akses lokal.\nKetik tanpa level setelah nick, bot perlu rejoin conference. bila parameter ketiga "permanen" disebutkan, akses ditetapkan permanen, bila tidak akses akan hilang saat bot rejoin conference.\n-100 - diabaikan, seluruh pesan oleh pengguna dengan akses ini akan diabaikan pada tingkat kernel\n-1 - ditiadakan\n0 - perintah dan macro sangat dibatasi, otomatis dikenal sebagai visitor\n10 - parintah dan macro standar, otomatis dikenal sebagai participan\n11 - perintah dan macro diperluas (akses juga ;-) !!!), otomatis dikenal sebagai member\n15 (16) - perintah dan macro moderator, otomatis dikenal sebagai moderator\n20 - perintah dan macro admin, otomatis dikenal sebagai admin\n30 - perintah dan macro owner, otomatis dikenal sebagai owner\n40 - tidak semua perintah diiplementasikan, dapat menggunakan perintah leave dan join bot\n100 - admin-bot, patuh semua perintah', 'set_access <nick> <level> [permanen]', ['set_access guy 20', 'set_access guy 30 permanen'])
-register_command_handler(handler_access_set_access_glob, 'globacc', ['access','superadmin','all'], 100, 'Menetapkan atau menghapus akses lokal.\nKetik tanpa level setelah nick untuk menghapus akses.', 'globacc <nick> <level>', ['globacc guy 100','globacc guy'])
+register_command_handler(handler_access_login, 'login', ['access','admin','all'], 0, 'Login as bot admin, the command must be type on private!', 'login <password>', ['login secret'])
+register_command_handler(handler_access_login, 'logout', ['access','admin','all'], 0, 'Logout as bot admin.', 'logout', ['logout'])
+register_command_handler(handler_access_view_access, 'access', ['access','admin','all'], 0, 'Show access level of a user.\n-100 - omitted, all messages from users with this access will be ignored at the kernel level\n-1 - ignored\n0 - commands and macros are very limited, automatic known as visitor\n10 - standard commands and macro, automatically known as participant\n11 - extended commands and macro (access too ;-) !!!), automatically known as member\n15 (16) - commands and macro for moderator, automatically known as moderator\n20 - commands and macro for admin, automatically known as admin\n30 - commands and macro for owner owner\n40 - not all commands implemented, can join and leave bot\n100 - Bot Admin, obey all commands', 'access [nick]', ['access', 'access guy'])
+register_command_handler(handler_access_set_access, 'set_access', ['access','admin','all'], 15, 'Grant or withdrawn local access of a user.\nWrite without level after nickname to delete the access, bot need to rejoin conference. if the third parameter "permanent" mentioned, the access grant permanently, if not the access deleted soon when bot bila tidak akses akan hilang saat bot rejoin conference.\n-100 - omitted, all messages from users with this access will be ignored at the kernel level\n-1 - ignored\n0 - commands and macros are very limited, automatic known as visitor\n10 - standard commands and macro, automatically known as participant\n11 - extended commands and macro (access too ;-) !!!), automatically known as member\n15 (16) - commands and macro for moderator, automatically known as moderator\n20 - commands and macro for admin, automatically known as admin\n30 - commands and macro for owner owner\n40 - not all commands implemented, can join and leave bot\n100 - Bot Admin, obey all commands', 'set_access <nick> <level> [permanent]', ['set_access guy 20', 'set_access guy 30 permanent'])
+register_command_handler(handler_access_set_access_glob, 'globacc', ['access','superadmin','all'], 100, 'Grant or withdrawn global access of a user.\nWrite without level after nickname to delete the access.', 'globacc <nick> <level>', ['globacc guy 100','globacc guy'])
 
 register_stage0_init(get_access_levels)
