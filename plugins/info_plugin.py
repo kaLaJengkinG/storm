@@ -51,8 +51,9 @@ def handler_total_in_muc(type, source, parameters):
 def handler_bot_uptime(type, source, parameters):
 	if INFO['start']:
 		uptime=int(time.time() - INFO['start'])
-		rep = u'i has been working for '+timeElapsed(uptime)
-		rep += u'\ni was got %s messagess, created %s presences and %s iq-queries, and executed %s commands\n'%(str(INFO['msg']),str(INFO['prs']),str(INFO['iq']),str(INFO['cmd']))
+		rep = u'\n- Session PID: '+str(os.getpid())
+		rep += u'\n- Working time: '+timeElapsed(uptime)
+		rep += u'\n- Messages posted: %s\n- Presences proceed: %s\n- Iq-queries proceed: %s\n- Commands executed: %s' % (str(INFO['msg']),str(INFO['prs']),str(INFO['iq']),str(INFO['cmd']))
 		if os.name=='posix':
 			try:
 				pr = os.popen('ps -o rss -p %s' % os.getpid())
@@ -60,10 +61,10 @@ def handler_bot_uptime(type, source, parameters):
 				mem = pr.readline().strip()
 			finally:
 				pr.close()
-			if mem: rep += u'i also occupied %s kb of memory, ' % mem
+			if mem: rep += u'\n- Memory usage: %s Kb ' % mem
 		(user, system,qqq,www,eee,) = os.times()
-		rep += u'spent %.2f seconds of processor, %.2f seconds of system time with totally %.2f seconds of general system time\n' % (user, system, user + system)
-		rep += u'generated totally %s streams, now active %s streams' % (INFO['thr'], threading.activeCount())
+		rep += u'\n- CPU time spent: %.2f seconds\n- System time spent: %.2f seconds\n- Total system-wide time: %.2f seconds' % (user, system, user + system)
+		rep += u'\n- Total generated streams: %s\n- Total active streams: %s ' % (INFO['thr'], threading.activeCount())
 	else:
 		rep = u'*PARDON*'
 	reply(type, source, rep)

@@ -55,7 +55,7 @@ def macrodel_handler(type, source, parameters):
 		MACROS.remove(parameters, source[1])
 #		write_file('dynamic/'+source[1]+'macros.txt', str(MACROS.macrolist[source[1]]))
 		MACROS.flush()
-		rep = u'killed'
+		rep = u'removed'
 	else:
 		rep = u'it is not enough arguments'
 	reply(type, source, rep)
@@ -64,7 +64,7 @@ def gmacrodel_handler(type, source, parameters):
 	if parameters:
 		MACROS.remove(parameters)
 		write_file('dynamic/macros.txt', str(MACROS.gmacrolist))
-		rep = u'killed'
+		rep = u'removed'
 	else:
 		rep = u'it is not enough arguments'
 	reply(type, source, rep)
