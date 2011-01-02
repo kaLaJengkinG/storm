@@ -30,5 +30,5 @@ def roster_show(type,source,parameters):
         reply(type,source, s)
 
 register_command_handler(roster_show, 'roster_show', ['superadmin'], 100, 'Show contacts on bot roster.', 'roster_all', ['roster_show'])		
-register_command_handler(roster_sub, 'roster_add', ['superadmin'], 100, 'Add a contact on bot roster.', 'roster_add <jid>', ['roster_add guy@server.dom'])
-register_command_handler(roster_unsub, 'roster_del', ['superadmin'], 100, 'Delete a contact on bot roster.', 'roster_del <jid>', ['roster_del guy@server.dom'])
+register_command_handler(roster_sub, 'roster_add', ['superadmin'], 100, 'Add a contact on bot roster.', 'roster_add <jid>', ['roster_add guy@server.tld'])
+register_command_handler(roster_unsub, 'roster_del', ['superadmin'], 100, 'Delete a contact on bot roster.', 'roster_del <jid>', ['roster_del guy@server.tld'])

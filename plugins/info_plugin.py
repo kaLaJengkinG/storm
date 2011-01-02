@@ -70,5 +70,5 @@ def handler_bot_uptime(type, source, parameters):
 	reply(type, source, rep)
 
 register_command_handler(handler_getrealjid, 'truejid', ['info','admin','muc','all'], 20, 'Real JID of the indicated nick shows. Works only if a bot is a moderator certainly', 'truejid <nick>', ['truejid Pily'])
-register_command_handler(handler_total_in_muc, 'here', ['info','muc','all'], 10, 'Shows the amount of users being in a conference.', 'here', ['here'])
+register_command_handler(handler_total_in_muc, 'here', ['info','admin','muc','all'], 10, 'Shows the amount of users being in a conference.', 'here', ['here'])
 register_command_handler(handler_bot_uptime, 'botup', ['info','admin','all'], 10, 'Shows how many time a bot works without falling.', 'botup', ['botup'])

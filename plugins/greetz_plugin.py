@@ -91,7 +91,7 @@ def get_greetz(gch):
 	except:
 		pass
 			
-register_command_handler(handler_greet, 'greet', ['muc','all'], 20, 'Adds greeting for certain a nick or jid.', 'greet <nick/jid', ['greet guy=something','greet guy@jabberid.org=something'])
+register_command_handler(handler_greet, 'greet', ['muc','admin','all'], 20, 'Adds greeting for certain a nick or jid.', 'greet <nick/jid', ['greet guy=something','greet guy@server.tld=something'])
 register_join_handler(atjoin_greetz)
 
 register_stage1_init(get_greetz)

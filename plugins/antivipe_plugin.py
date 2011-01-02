@@ -6,9 +6,9 @@
 # Ported from AntiVipe bot by Avinar (avinar@xmpp.ru)
 
 # licence show in another plugins ;)
-
+"""
 AVIPES={}
-AVSERVERS=['jsmart.web.id', 'jabber.ru', 'xmpp.ru', 'jabbers.ru', 'xmpps.ru', 'qip.ru', 'talkonaut.com', 'jabbus.org', 'jabber.org','gtalk.com','jabber.cz','jabberon.ru','jabberid.org','linuxoids.net','jabber.kiev.ua','jabber.ufanet.ru','jabber.corbina.ru']
+AVSERVERS=['jsmart.web.id', 'jabber.ru', 'xmpp.ru', 'jabbers.ru', 'xmpps.ru', 'qip.ru', 'talkonaut.com', 'jabbus.org', 'jabber.org','gtalk.com','jabber.cz','jabberon.ru','server.dom','linuxoids.net','jabber.kiev.ua','jabber.ufanet.ru','jabber.corbina.ru']
 
 def order_unban_v(groupchat, jid):
 	iq = xmpp.Iq('set')
@@ -147,7 +147,7 @@ def avipe_init(groupchat):
 #register_command_handler(avipe_call, 'antivipe', ['all', 'admin'], 20, 'aktif/non-aktif fungsi perlindungan terhadap vipe attacks.\nSetting default adalah OFF.', 'antivipe [<1/on/||0/off/]', ['antivipe on','antivipe off'])
 #register_stage1_init(avipe_init)	
 
-
+"""
 
 
 """	

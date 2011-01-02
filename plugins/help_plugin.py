@@ -37,7 +37,7 @@ def handler_help_help(type, source, parameters):
 	reply(type, source, rep)
 
 def handler_help_commands(type, source, parameters):
-	date=time.strftime('%d %b %Y (%a)', time.gmtime()).decode('utf-8')
+	date=time.strftime('%a, %d %b %Y', time.gmtime()).decode('utf-8')
 	groupchat=source[1]
 	if parameters:
 		rep,dsbl = [],[]

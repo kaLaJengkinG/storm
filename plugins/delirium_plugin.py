@@ -230,6 +230,6 @@ register_command_handler(handler_clean_conf, 'clean', ['fun','muc','all'], 30, '
 register_command_handler(handler_afools_control, 'afools', ['fun','muc','all'], 30, 'Enables and disables the bots jokes, which the bot sometimes substitutes (command is always executed!) Standard response of commands.', 'afools <1|0>', ['afools 1','afools 0'])
 
 #  listed below command handler are not recommended
-register_command_handler(handler_kick_ass, 'spam', ['fun','superadmin','muc','all'], 31, 'Spamming a JID in current conference with smiles ( :) ).\nTarget of spam is determine by first parameter <nick>.\nRepetition of spam is determine by the second parameter <amount>.\nThe amount of spam determined by third parameter <amount>.\nWrite this command in private.', 'spam <nick> <amount> <amount>', ['spam bLaDe 1000 10','spam guy 500 8'])
+register_command_handler(handler_kick_ass, 'spam', ['fun','superadmin','muc','all'], 100, 'Spamming a JID in current conference with smiles ( :) ).\nTarget of spam is determine by first parameter <nick>.\nRepetition of spam is determine by the second parameter <amount>.\nThe amount of spam determined by third parameter <amount>.\nWrite this command in private.', 'spam <nick> <amount> <amount>', ['spam guy 1000 10','spam guy 500 8'])
 
 register_stage1_init(get_afools_state)

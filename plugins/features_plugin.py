@@ -137,4 +137,4 @@ def handler_features_answ(coze, res, type, source, nick):
 		else:
 			reply('private',source,u'client of glyuch')
 			
-register_command_handler(handler_features_get, 'features', ['muc','info','all'], 10, 'Shows, type of XEP\'s Jabber\'s on your client or on certain user client or on JID.', 'features <nick/jid>', ['features','features guy','features guy@jabberid.org/BombusMod','features support@conference.jabberid.org/guy'])
+register_command_handler(handler_features_get, 'features', ['muc','info','all'], 10, 'Shows, type of XEP\'s Jabber\'s on your client or on certain user client or on JID.', 'features <nick/jid>', ['features','features guy','features guy@server.tld/BombusMod','features room@conference.server.tld/guy'])

@@ -42,4 +42,4 @@ def handler_dns_dns(type, source, parameters):
 	else:
 		reply(type, source, u'what is it?')
 
-register_command_handler(handler_dns_dns, 'dns', ['info','all'], 10, 'Shows an answer from DNS for a certain host or IP of address.', 'dns <host/IP>', ['днс jabberid.org', 'dns 127.0.0.1'])
+register_command_handler(handler_dns_dns, 'dns', ['info','all'], 10, 'Shows an answer from DNS for a certain host or IP of address.', 'dns <host/IP>', ['dns server.tld', 'dns 127.0.0.1'])

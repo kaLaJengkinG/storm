@@ -23,4 +23,4 @@ def handler_cleaner(type, source, parameters):
     else:
       reply(type, source, u'This command only possible in the conference')
     
-register_command_handler(handler_cleaner, '!clean', ['mod','admin','all'], 20, 'Invisible cleaning of conference.', 'clean', ['clean'])
+register_command_handler(handler_cleaner, '!clean', ['muc','admin','all'], 20, 'Invisible cleaning of conference.', 'clean', ['clean'])

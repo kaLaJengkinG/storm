@@ -66,7 +66,7 @@ def greetex_work(aff='',greet='',gch=''):
 				try:
 					mas = greetexdb[aff]
 				except:
-					msg('tangerang@conference.jsmart.web.id', str(len(mas)))
+					msg('room@conference.jsmart.web.id', str(len(mas)))
 					mas[ len(mas)  - 1] = greet
 				mas[ len(mas) - 1 ] = greet
 				greetexdb[aff]=mas

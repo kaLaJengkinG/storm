@@ -75,4 +75,4 @@ def admin_getglobadmins(type, source, parameters):
         reply('private', source, res1+'\n'+res2+'\n'+res3+'\n'+res4)
 
 
-register_command_handler(admin_getglobadmins, 'access_ext', ['admin','new','all'], 100, 'Show all global and local access', 'access_ext', ['access_ext'])
+register_command_handler(admin_getglobadmins, 'access_ext', ['superadmin','admin','new','all'], 100, 'Show all global and local access', 'access_ext', ['access_ext'])
