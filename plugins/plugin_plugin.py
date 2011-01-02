@@ -88,6 +88,6 @@ def handler_load_plugin(type, source, body):
 	reply(type, source, repl)
 
 register_command_handler(handler_from_out_com, 'commadd', ['superadmin','all'], 100,'Enable a command, that previously disabled.\nIf no parameters the bot will list disabled commands.', 'commadd [command]', ['commadd ping','commadd'])
-register_command_handler(handler_command_out, 'commout', ['superadmin','all'], 100,'Completely disables the command (up to podgruzki plug-in or restart, or direct connection to the team comadd).\nNo parameters will spislk disabled teams.', 'commout [command]', ['comout ping','commout'])
+register_command_handler(handler_command_out, 'commout', ['superadmin','all'], 100,'Completely disable a command globally (can be enable by command loadpl or bot restart, or by comadd).\nNo parameters will show disabled commands.', 'commout [command]', ['comout ping','commout'])
 register_command_handler(handler_plug_list, 'pluglist', ['superadmin','all'], 40,'Shows a list of available plugins', 'pluglist', ['pluglist'])
 register_command_handler(handler_load_plugin, 'loadpl', ['superadmin','all'], 100,'Load one of the available plugins', 'loadpl [plugin_name]', ['loadpl admin'])
